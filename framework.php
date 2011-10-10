@@ -58,6 +58,10 @@ class DatabaseConn {
       return mysql_query($query, $this->conn);
     }
 
+    function getNumRows($res){
+      return mysql_num_rows($res);
+    }
+    
     function closecon() {
       mysql_close($this->conn);
     }
