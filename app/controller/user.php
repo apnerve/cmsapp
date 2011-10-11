@@ -7,26 +7,28 @@ class User extends Controller {
   }
   
    function index() {
-    Session::setFlashMessage('hello');
+    //Session::setFlashMessage('hello');
   }
   
   function login() {
     if(isset($_POST['login'])) {
-	print_r($_POST);
       $row = $this->user->ifloggedin($_POST['username'], $_POST['password']);
       if ($row) {
         Session::set('isLoggedIn',TRUE);
 		Session::set('username',$_POST['username']);
 		Session::set('designation',$row['designation']);
 		//how to directly call the browse function from the controller article file to fetch data (not from model, from controller)
-		Load::view('article_listing.php'); // we don't need to load the view here. Instead we need to redirect.
+                //we can directly call the browse function by $this->browse(), if the browse function exists in this class
+		Load::view('article_listing.php'); // we don't need to load the view here. Instead we need to call the browse function here.
       }
       else {
         echo 'Login failed';
       }
     }
-    else
-	Load::view('login.php',NULL);;
+    else{
+	$data['title'] = 'Login';
+	Load::view('login.php',$data);
+    }
   }
   
   function logout() {

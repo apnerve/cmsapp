@@ -44,11 +44,11 @@ return $rows;
   
   public function ifloggedin($us,$pa)
   {
-  $rows = $this->con->queryexec("SELECT * FROM cmsusers WHERE user = '".$us."' AND pass = '".$pa."'");
-echo $rows;  if ($this->con->getNumRows($rows) > 0)
+  $rows = $this->con->queryexec("SELECT * FROM cmsusers WHERE user = '".$us."' AND pass = PASSWORD('".$pa."')");
+    if ($this->con->getNumRows($rows) > 0)
   {
-  $row=$this->con->fetchArray($rows);
-  return $row;
+    $row=$this->con->fetchArray($rows);
+    return $row;
   }
   else
   return false;
