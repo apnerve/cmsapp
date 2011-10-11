@@ -62,6 +62,10 @@ class DatabaseConn {
       return mysql_num_rows($res);
     }
     
+    function fetchArray($res) {
+        return mysql_fetch_array($res);
+    }
+    
     function closecon() {
       mysql_close($this->conn);
     }

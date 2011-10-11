@@ -17,9 +17,7 @@ class User extends Controller {
         Session::set('isLoggedIn',TRUE);
 		Session::set('username',$_POST['username']);
 		Session::set('designation',$row['designation']);
-		//how to directly call the browse function from the controller article file to fetch data (not from model, from controller)
-                //we can directly call the browse function by $this->browse(), if the browse function exists in this class
-		Load::view('article_listing.php'); // we don't need to load the view here. Instead we need to call the browse function here.
+    Helper::redirect('article');
       }
       else {
         echo 'Login failed';
