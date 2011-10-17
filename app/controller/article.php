@@ -3,11 +3,7 @@
 class Article extends Controller {
   var $article;
   function __construct() {
-    if(!Session::get('isLoggedIn')) {
-      Session::set('returnTo',$_SERVER['REQUEST_URI']);
-      Helper::redirect('user/login');
-    }
-    else Session::clear('returnTo');
+    
     $this->article = Load::model('article_model');
   }
   

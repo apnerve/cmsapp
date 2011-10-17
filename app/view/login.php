@@ -3,6 +3,11 @@
        <div class="span8 offset4"> <form action="<?php print Helper::url('user/login');?>" method="post" class="form-stacked">
        <fieldset>
 	<legend>Login</legend>
+	<?php if ($this->notice): ?>
+	<div class="main row">
+  <p class="alert-message <?php print $this->notice['type'] ;?>"><?php print $this->notice['message'] ;?></p>
+</div>
+<?php endif; ?>
 	<div class="clearfix">
 		<label>Username:</label>   
 		<div class="input">

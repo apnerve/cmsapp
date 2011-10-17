@@ -4,6 +4,7 @@ class User extends Controller {
   
   function __construct() {
     $this->user = Load::model('user_model');
+	//$usr=new User();
   }
   
    function index() {
@@ -31,11 +32,21 @@ class User extends Controller {
   
   function logout() {
     Session::clear('isLoggedIn');
+	Helper::redirect('user/login');
+  }
+  
+  function browse() {
+    $userlist = $this->user->browse(10);
+    $data = array(
+      'title' => 'list of users',
+      'list' => $userlist
+    );
+    Load::view('user_list.php',$data);
   }
   
   public function add_user()
   {
-  if ($_POST('addednew'))
+  if ($_POST['addednew'])
   {
   $result=$this->user->add($_POST['username'],$_POST['password'],$_POST['firstname'],$_POST['lastname']);
   $notice['message'] = ($result) ? 'New user added' : 'There was a problem adding the user to the database' ;
@@ -94,7 +105,7 @@ class User extends Controller {
 
 public function changepwd()
 {
-  if ($_POST('changesubmitted'))
+  if ($_POST['changesubmitted'])
   {
   $result=$this->user->changepwd($_SESSION['username'],$_POST['oldpwd'],$_POST['newpwd']);
   $notice['message'] = ($result) ? 'Password changed successfully' : 'Password could not be changed' ;
@@ -108,7 +119,8 @@ public function changepwd()
           'message' => $notice['message'])
     );
 
-    Load::view('user_list.php',$data);
+   Helper::redirect('user/logout');
+	//Load::view('user_list.php',$data); //make a notice page for Password Changed
   }
   
   else

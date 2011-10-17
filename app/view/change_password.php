@@ -1,4 +1,4 @@
-require_once('header.php') ;?>
+<?php require_once('header.php') ;?>
       <div class="main row">
         <form action="<?php print Helper::url('user/changepwd');?>" method="post" class="form-stacked">
           <fieldset>

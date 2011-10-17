@@ -1,6 +1,6 @@
 <?php require_once('header.php') ;?>
   <div class="main row">
-    <h1>article listing</h1>
+    <h1>Articles so far</h1>
     
     <?php if($this->list) :?>
     <table class="zebra-striped">
