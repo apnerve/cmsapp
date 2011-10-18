@@ -13,17 +13,10 @@
             </div>
             <div class="actions">
               <input type="hidden" name="filled" value=="true" />
+              <input type="hidden" name="article_id" value="<?php print $this->article_id ;?>" />
               <input class="btn primary" type="submit" value="publish" />
             </div>
           </fieldset>
         </form>
       </div>
 <?php require_once('footer.php') ;?>
-
-
-
-
-
-
-
-

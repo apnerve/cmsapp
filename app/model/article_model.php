@@ -47,7 +47,7 @@ class Article_model {
   public function edit($article_id, $title, $content) {
   $content = mysql_real_escape_string($content);
   $title=mysql_real_escape_string($title);
-  $sql = "UPDATE cmsarticles set (title,content,TitleTime) VALUES ('" .$title ."', '" . $content ."', NOW()) where id=".$article_id;
+  $sql = "UPDATE cmsarticles set title='". $title ."',content='". $content ."',TitleTime=NOW() where id='". $article_id ."'"; // Not sure of the format UPDATE table set () VALUES() WHERE
     return $this->con->queryexec($sql);
   }
   

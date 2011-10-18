@@ -3,12 +3,11 @@
 class Article extends Controller {
   var $article;
   function __construct() {
-    if (Session::timeOut())
-	 Helper::redirect('user/logout');
-	 else
-	 Session::set($_SESSION['time'],time());
+  if (Session::timeOut())
+    Helper::redirect('user/logout');
+	else
+    Session::set('time',time()); // There is no need of $_SESSION super global here.
     $this->article = Load::model('article_model');
-	
   }
   
   function index() {
@@ -35,9 +34,9 @@ class Article extends Controller {
     else parent::error();
   }
   
-  function edit($id) {
+  function edit($id = NULL) {
     if(isset($_POST['filled'])) {
-      $result = $this->article->edit($id, $_POST['title'], $_POST['content']);
+      $result = $this->article->edit($_POST['article_id'], $_POST['title'], $_POST['content']); // This is not good for security reasons. We need to sanitize the inputs
       $notice['message'] = ($result) ? 'Article edited successfully' : 'Article could not be edited' ;
       $notice['type'] = ($result) ? 'success' : 'danger';
       $data = array(
@@ -54,7 +53,8 @@ class Article extends Controller {
       $data = array(
         'title' => 'Edit article',
         'type' => 'edit',
-        'article_data' => $article_data
+        'article_data' => $article_data,
+        'article_id' => $id
       );
       Load::view('article_add.php', $data);
     }

@@ -3,14 +3,12 @@
 class User extends Controller {
   
   function __construct() {
-
-	 
     $this->user = Load::model('user_model');
-/* 	  if (Session::timeOut())
-	 Helper::redirect('user/logout');
-	 else
-	 Session::set($_SESSION['time'],time()); */
-	//$usr=new User();
+      if (Session::timeOut())
+        echo 'will redirect';
+        //Helper::redirect('user/logout');
+      else
+        Session::set('time',time());
   }
   
    function index() {
@@ -22,27 +20,27 @@ class User extends Controller {
       $row = $this->user->ifloggedin($_POST['username'], $_POST['password']);
       if ($row) {
         Session::set('isLoggedIn',TRUE);
-		Session::set('username',$_POST['username']);
-		Session::set('designation',$row['designation']);
-		Session::set('time',time());
-    Helper::redirect('article');
+        Session::set('username',$_POST['username']);
+        Session::set('designation',$row['designation']);
+        Session::set('time',time());
+        Helper::redirect('article');
       }
       else {
         echo 'Login failed';
       }
     }
     else{
-	$data['title'] = 'Login';
-	Load::view('login.php',$data);
+      $data['title'] = 'Login';
+      Load::view('login.php',$data);
     }
   }
   
   function logout() {
     Session::clear('isLoggedIn');
-	Session::clear('username');
-	Session::clear('designation');
-	Session::clear('time');
-	Helper::redirect('user/login');
+    Session::clear('username');
+    Session::clear('designation');
+    Session::clear('time');
+    Helper::redirect('user/login');
   }
   
   function browse() {
@@ -54,33 +52,29 @@ class User extends Controller {
     Load::view('user_list.php',$data);
   }
   
-  public function add_user()
-  {
-  if ($_POST['addednew'])
-  {
-  $result=$this->user->add($_POST['username'],$_POST['password'],$_POST['firstname'],$_POST['lastname']);
-  $notice['message'] = ($result) ? 'New user added' : 'There was a problem adding the user to the database' ;
+  public function add() {// just having add makes sense as the URL would be user/add which is meaningful rather than user/add_user
+    if ($_POST['addednew']) {
+      $result=$this->user->add($_POST['username'],$_POST['password'],$_POST['firstname'],$_POST['lastname']); // Need to sanitize $_POST for security
+      $notice['message'] = ($result) ? 'New user added' : 'There was a problem adding the user to the database' ;
       $notice['type'] = ($result) ? 'success' : 'danger';
-  $userlist=$this->user->browse();
-  $data = array(
-      'title' => 'list of users',
-      'list' => $userlist,
-	  'notice' => array(
-          'type' => $notice['type'],
-          'message' => $notice['message'])
-    );
-
-    Load::view('user_list.php',$data);
-  }
-  
-  else
-  {
-   $data = array(
+      $userlist=$this->user->browse();
+      $data = array(
+        'title' => 'list of users',
+        'list' => $userlist,
+        'notice' => array(
+            'type' => $notice['type'],
+            'message' => $notice['message'])
+      );
+      Load::view('user_list.php',$data);
+    }
+    
+    else {
+      $data = array(
         'title' => 'Add new user',
         'userdata' => NULL
       );
-      Load::view('user_add.php', $data);
-  }
+     Load::view('user_add.php', $data);
+    }
   }
   
   public function del_user($id)

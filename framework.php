@@ -165,9 +165,17 @@ class Session {
   }
   
   public static function timeOut() {
-  if(time()-$_SESSION['time']>300)
-return true;
-else
-return false;
+  /*
+    If TIME is SET find if the difference is greater than 300 milliseconds and return true. If it is not return false. If TIME is NOT SET we don't do anything :)
+    Now the translation of the above text yield the following statements:
+  */
+    if(isset($_SESSION['time'])) {
+      if(time()-$_SESSION['time']>300)
+        return true;
+      else
+        return false;
+    }
+    
+    // We don't return false if time is not set because timeout returning false doesn't make any sense when time is not set
   }
 }
