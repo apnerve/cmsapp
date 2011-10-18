@@ -10,9 +10,19 @@ document.forms['frm'].elements['btnedit'+d].disabled=true;
 id1=d;
 }
 
+function update(d)
+{
+document.forms['frm'].elements['txtusername'+d].disabled=true;
+document.forms['frm'].elements['txtfirstname'+d].disabled=true;
+document.forms['frm'].elements['txtlastname'+d].disabled=true;
+document.forms['frm'].elements['btnupdate'+d].disabled=true;
+document.forms['frm'].elements['btnedit'+d].disabled=false;
+id1=d;
+}
 </script>
   <div class="main row">
     <h1>article listing</h1>
+  <p class="alert-message"><?php print Session::getFlashMessage(); ?></p>
     <?php if ($this->list) :?>
     <table class="zebra-striped">
       <thead>
@@ -30,8 +40,8 @@ id1=d;
 <td><input type="text" disabled="true" name="txtfirstname<?php echo $userlist['ID'];?>" id="<?php echo $userlist['ID']; ?>" value="<?php echo $userlist['firstname'];?>"></td>
 <td><input type="text" disabled="true" name="txtlastname<?php echo $userlist['ID'];?>" id="<?php echo $userlist['ID']; ?>" value="<?php echo $userlist['lastname'];?>"></td>
 <td><input type="button" name= "btnedit<?php echo $userlist['ID'];?>" value="Edit" id="<?php echo $userlist['ID']; ?>" onclick="edit(<?php echo $userlist['ID'];?>)">
-<a href="<?php print Helper::url('user/edit/' . $userlist['ID']) ;?>" class="btn info"><input type="submit" name= "btnupdate<?php echo $userlist['ID'];?>" disabled="true" value="Update" id="<?php echo $userlist['ID'];?>"></a>
-<a href="<?php print Helper::url('user/del_user/' . $userlist['ID']) ;?>" class="btn danger"><input type="submit" name= "btndelete<?php echo $userlist['ID'];?>" value="Delete" id="<?php echo $userlist['ID'];?>"></a>
+<a href="<?php print Helper::url('user/edit/' . $userlist['ID']) ;?>"><input name= "btnupdate<?php echo $userlist['ID'];?>" class="btn primary" disabled="true" value="Update" id="<?php echo $userlist['ID'];?>" onclick="update("<?php echo $userlist['ID'];?>");"></a>
+<a href="<?php print Helper::url('user/del_user/' . $userlist['ID']) ;?>" class="btn danger">Delete</a>
       	</tr>
         <?php endforeach ;?>
       </tbody>

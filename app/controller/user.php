@@ -3,7 +3,13 @@
 class User extends Controller {
   
   function __construct() {
+
+	 
     $this->user = Load::model('user_model');
+/* 	  if (Session::timeOut())
+	 Helper::redirect('user/logout');
+	 else
+	 Session::set($_SESSION['time'],time()); */
 	//$usr=new User();
   }
   
@@ -18,6 +24,7 @@ class User extends Controller {
         Session::set('isLoggedIn',TRUE);
 		Session::set('username',$_POST['username']);
 		Session::set('designation',$row['designation']);
+		Session::set('time',time());
     Helper::redirect('article');
       }
       else {
@@ -32,6 +39,9 @@ class User extends Controller {
   
   function logout() {
     Session::clear('isLoggedIn');
+	Session::clear('username');
+	Session::clear('designation');
+	Session::clear('time');
 	Helper::redirect('user/login');
   }
   
@@ -91,6 +101,7 @@ class User extends Controller {
   public function edit($id)
   {
   $result=$this->user->edit($id);
+    $userlist=$this->user->browse();
   $notice['message'] = ($result) ? 'User details updated' : 'There was a problem updating the details of the user' ;
       $notice['type'] = ($result) ? 'success' : 'danger';
   $data = array(
@@ -108,19 +119,19 @@ public function changepwd()
   if ($_POST['changesubmitted'])
   {
   $result=$this->user->changepwd($_SESSION['username'],$_POST['oldpwd'],$_POST['newpwd']);
-  $notice['message'] = ($result) ? 'Password changed successfully' : 'Password could not be changed' ;
-      $notice['type'] = ($result) ? 'success' : 'danger';
+  $val = ($result) ? 'Password changed successfully' : 'Password could not be changed' ;
+      Session::setFlashMessage($val);
+	  if ($result)
+	  Helper::redirect('user/logout');
+	  else
+  {
   $userlist=$this->user->browse();
   $data = array(
       'title' => 'list of users',
       'list' => $userlist,
-	  'notice' => array(
-          'type' => $notice['type'],
-          'message' => $notice['message'])
-    );
-
-   Helper::redirect('user/logout');
-	//Load::view('user_list.php',$data); //make a notice page for Password Changed
+	  );
+Load::view('user_list.php',$data); //make a notice page for Password Changed
+}
   }
   
   else

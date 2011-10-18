@@ -3,8 +3,12 @@
 class Article extends Controller {
   var $article;
   function __construct() {
-    
+    if (Session::timeOut())
+	 Helper::redirect('user/logout');
+	 else
+	 Session::set($_SESSION['time'],time());
     $this->article = Load::model('article_model');
+	
   }
   
   function index() {

@@ -24,7 +24,7 @@ class User_model {
   }
   
   public function edit($user_id) {
-  return $this->con->queryexec('UPDATE cmsusers SET user="'.$_POST[$username].'",firstname="'.$_POST[$firstname].'",lastname="'.$_POST[$lastname].'"where ID="'.$user_id.'"');
+  return $this->con->queryexec('UPDATE cmsusers SET user="'.$_POST['txtusername'].'",firstname="'.$_POST['txtfirstname'].'",lastname="'.$_POST['txtlastname'].'"where ID="'.$user_id.'"');
 
   }
   
@@ -39,7 +39,11 @@ return $rows;
   }
   
   public function changepwd($username, $oldpassword, $newpassword) {
-  return $this->con->queryexec("UPDATE cmsusers SET pass=PASSWORD('".$newpassword."') where user='".$username."' and pass='".$oldpassword."'");
+  $result=$this->con->queryexec("Select user, pass from cmsusers where user='".$username."' and pass=PASSWORD('".$oldpassword."')");
+  if($this->con->getNumRows($result)>0)
+  return $this->con->queryexec("UPDATE cmsusers SET pass=PASSWORD('".$newpassword."') where user='".$username."' and pass=PASSWORD('".$oldpassword."')");
+  else
+  return false;
   }
   
   public function ifloggedin($us,$pa)

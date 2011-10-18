@@ -163,4 +163,11 @@ class Session {
     }
     return $value;
   }
+  
+  public static function timeOut() {
+  if(time()-$_SESSION['time']>300)
+return true;
+else
+return false;
+  }
 }
