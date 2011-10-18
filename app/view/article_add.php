@@ -13,7 +13,9 @@
             </div>
             <div class="actions">
               <input type="hidden" name="filled" value=="true" />
+              <?php if($this->type == 'edit') :?>
               <input type="hidden" name="article_id" value="<?php print $this->article_id ;?>" />
+              <?php endif ;?>
               <input class="btn primary" type="submit" value="publish" />
             </div>
           </fieldset>
