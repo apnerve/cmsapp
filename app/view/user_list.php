@@ -21,7 +21,7 @@ id1=d;
 }
 </script>
   <div class="main row">
-    <h1>article listing</h1>
+    <h1>user list</h1>
   <p class="alert-message"><?php print Session::getFlashMessage(); ?></p>
     <?php if ($this->list) :?>
     <table class="zebra-striped">
