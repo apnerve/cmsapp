@@ -1,7 +1,7 @@
 <?php require_once('header.php') ;?>
  <div class="main row">
     <h1>user list</h1>
-  <p class="alert-message"><?php print Session::getFlashMessage(); ?></p>
+  <!--<p class="alert-message"><?php print Session::getFlashMessage(); ?></p>-->
     <?php if ($this->list) :?>
     <table class="zebra-striped">
       <thead>
