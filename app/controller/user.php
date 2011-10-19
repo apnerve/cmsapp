@@ -129,7 +129,7 @@ class User extends Controller {
 public function changepwd()
 {
   $this->_loggedIn();
-  if ($_POST['changesubmitted'])
+  if (isset($_POST['changesubmitted']))
   {
   $result=$this->user->changepwd($_SESSION['username'],$_POST['oldpwd'],$_POST['newpwd']);
   $val = ($result) ? 'Password changed successfully' : 'Password could not be changed' ;
