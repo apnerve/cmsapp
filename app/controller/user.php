@@ -81,6 +81,7 @@ class User extends Controller {
   
   public function delete($id)
   {
+  $this->_loggedIn();
   $result=$this->user->delete($id);
   $notice['message'] = ($result) ? 'User deleted' : 'There was a problem deleting the user' ;
       $notice['type'] = ($result) ? 'success' : 'danger';
@@ -96,6 +97,7 @@ class User extends Controller {
   
   public function edit($id = NULL)
   {
+  $this->_loggedIn();
   if (isset($_POST['filled']))
   {
   $result=$this->user->edit($_POST['user_id'],$_POST['firstname'],$_POST['lastname'],$_POST['designation']);
@@ -126,6 +128,7 @@ class User extends Controller {
 
 public function changepwd()
 {
+  $this->_loggedIn();
   if ($_POST['changesubmitted'])
   {
   $result=$this->user->changepwd($_SESSION['username'],$_POST['oldpwd'],$_POST['newpwd']);
