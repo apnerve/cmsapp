@@ -3,11 +3,15 @@
 class Article extends Controller {
   var $article;
   function __construct() {
-  if (Session::timeOut())
-    Helper::redirect('user/logout');
-	else
-    Session::set('time',time()); // There is no need of $_SESSION super global here.
-    $this->article = Load::model('article_model');
+      $this->article = Load::model('article_model');
+ 	if (isset($_SESSION['time']))
+	{
+      if (Session::timeOut())
+        Helper::redirect('user/logout');
+      else
+        Session::set('time',time());
+		}
+
   }
   
   function index() {

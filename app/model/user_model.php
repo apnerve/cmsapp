@@ -20,11 +20,11 @@ class User_model {
   }
   
   public function read($user_id) {
-  return mysql_fetch_object($this->con->queryexec('SELECT user,firstname,lastname FROM cmsusers WHERE ID = '.$user_id));
+  return mysql_fetch_object($this->con->queryexec('SELECT user,firstname,lastname,designation FROM cmsusers WHERE ID = '.$user_id));
   }
   
-  public function edit($user_id) {
-  return $this->con->queryexec('UPDATE cmsusers SET user="'.$_POST['txtusername'].'",firstname="'.$_POST['txtfirstname'].'",lastname="'.$_POST['txtlastname'].'"where ID="'.$user_id.'"');
+  public function edit($user_id,$firstname,$lastname,$designation) {
+  return $this->con->queryexec("UPDATE cmsusers SET firstname='".$firstname."',lastname='".$lastname."',designation='".$designation."' where ID='".$user_id."'");
 
   }
   
