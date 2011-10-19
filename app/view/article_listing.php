@@ -20,6 +20,7 @@
       </tbody>
     </table>
     <p>
+	<?php { print Helper::link('article/displaymonths', 'View Archive', array('class' => 'btn primary')) ; } ?>
       <?php if (isset($_SESSION['isLoggedIn'])) { print Helper::link('article/add', 'Add new article', array('class' => 'btn primary')) ; } ?>
     </p>
     <?php else: ?>

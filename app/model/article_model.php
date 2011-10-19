@@ -10,11 +10,11 @@ class Article_model {
   /**
    * Browse the articles
    */
-  public function browse($no_of_articles, $option = NULL) {
+  public function browse($option = NULL,$period =NULL) {
     $result = NULL;
     switch ($option) {
       case 'timewise':
-      $rows=$this->con->queryexec('SELECT DISTINCT DATE_FORMAT( titletime,\'%M, %Y\' ) as time1 FROM cmsarticles');
+      $rows=$this->con->queryexec('SELECT ID, title FROM cmsarticles WHERE DATE_FORMAT( titletime,\'%M, %Y\')='.$period);
 	  while ($row = mysql_fetch_array($rows)){
         $result[$i] = $row;
         $i++;
@@ -22,7 +22,7 @@ class Article_model {
       break;
       
       default:
-      $rows=$this->con->queryexec('SELECT * FROM cmsarticles ORDER BY ID DESC LIMIT 0,10');
+      $rows=$this->con->queryexec('SELECT * FROM cmsarticles ORDER BY ID DESC');
       $i = 0;
       while($row = mysql_fetch_array($rows)){
         $result[$i] = $row;
@@ -70,5 +70,17 @@ class Article_model {
   public function getArticleTitleById($id) {
     $result = $this->read($id);
     return $result->title;
+  }
+  
+   public function displaymonths()
+  {
+  $rows =$this->con->queryexec('SELECT DISTINCT DATE_FORMAT( titletime,\'%M, %Y\' ) as time1 FROM cmsarticles');
+   if ($this->con->getNumRows($rows) > 0)
+  {
+    $row=$this->con->fetchArray($rows);
+    return $row;
+  }
+  else
+  return false;
   }
 }

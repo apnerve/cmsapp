@@ -19,7 +19,7 @@ class Article extends Controller {
   }
   
   function browse() {
-    $article_list = $this->article->browse(10);
+    $article_list = $this->article->browse();
     $data = array(
       'title' => 'article listing',
       'list' => $article_list
@@ -100,5 +100,14 @@ class Article extends Controller {
     );
     
     Load::view('notice.php', $data);
+  }
+  
+  function displaymonths() {
+  $months=$this->article->displaymonths();
+  $data=array(
+  'title'=> 'Archive',
+  'list'=>$months
+  );
+  Load::view('archive.php',$data);
   }
 }
